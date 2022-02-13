@@ -4,6 +4,10 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.example.netflix.ui.home.HomeViewModel" />
+
     </data>
 
 

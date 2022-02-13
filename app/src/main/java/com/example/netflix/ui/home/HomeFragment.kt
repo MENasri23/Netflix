@@ -22,6 +22,8 @@ class HomeFragment : Fragment() {
         binding = DataBindingUtil
             .inflate(layoutInflater, R.layout.home_fragment, container, false)
 
+        binding.viewModel = viewModel
+
         return binding.root
     }
 
