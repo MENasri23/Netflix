@@ -9,6 +9,7 @@ data class Movie(
     val genre: Genre,
     val metadata: Metadata,
     val overview: String,
+    val isFavorite: Boolean = false,
     @DrawableRes val imageId: Int,
 )
 
