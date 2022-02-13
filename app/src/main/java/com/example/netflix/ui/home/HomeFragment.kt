@@ -23,6 +23,7 @@ class HomeFragment : Fragment() {
             .inflate(layoutInflater, R.layout.home_fragment, container, false)
 
         binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         return binding.root
     }
