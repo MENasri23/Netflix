@@ -128,7 +128,7 @@ val movie8 = movie3.copy(
     metadata = meta8
 )
 
-val movies = listOf(
+fun getMovies() = listOf(
     movie1,
     movie2,
     movie3,

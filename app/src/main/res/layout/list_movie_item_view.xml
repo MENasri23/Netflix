@@ -5,16 +5,20 @@
 
     <data>
 
+        <variable
+            name="movie"
+            type="com.example.netflix.model.Movie" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardViewMovie"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="16dp"
-        app:cardElevation="4dp"
-        app:cardCornerRadius="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardCornerRadius="@dimen/cardview_corner_radius"
+        app:cardElevation="@dimen/cardView_elevation"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -29,11 +33,10 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@null"
                 android:scaleType="centerCrop"
-                app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintHeight_max="400dp"
+                app:layout_constraintHeight_max="300dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/cry_macho" />
+                tools:src="@drawable/the_dark_knight" />
 
             <View
                 android:layout_width="0dp"
@@ -49,7 +52,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:text="@{movie.title}"
+                android:textAppearance="?attr/textAppearanceHeadline6"
                 app:firstBaselineToTopHeight="@dimen/title_firstBaseLineToTop_height"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/movieImage"
@@ -59,7 +63,8 @@
                 android:id="@+id/dateRuntime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:text="@{@string/dateRuntimeFormat(movie.metadata.releaseDate, movie.metadata.runtime)}"
+                android:textAppearance="?attr/textAppearanceBody2"
                 app:firstBaselineToTopHeight="@dimen/subtitle_firstBaseLineToTop_height"
                 app:layout_constraintStart_toStartOf="@id/title"
                 app:layout_constraintTop_toBottomOf="@id/title"
@@ -70,6 +75,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
+                android:textAppearance="?attr/textAppearanceBody2"
                 app:firstBaselineToTopHeight="26dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/title"
@@ -90,21 +96,24 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/overview" />
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/btnFavorite"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                favorite="@{movie.favorite}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 app:layout_constraintBottom_toBottomOf="@+id/btnShare"
                 app:layout_constraintEnd_toStartOf="@id/btnShare"
                 app:layout_constraintTop_toTopOf="@+id/btnShare"
                 app:srcCompat="@drawable/ic_favorite_border_black" />
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/btnShare"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 app:layout_constraintBottom_toBottomOf="@id/btnGoWebsite"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/btnGoWebsite"
