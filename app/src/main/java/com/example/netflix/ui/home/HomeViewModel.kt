@@ -27,11 +27,5 @@ class HomeViewModel : ViewModel() {
         }
         _movies.value = newList
 
-
-
-        viewModelScope.launch {
-
-            _movies.postValue(newList)
-        }
     }
 }
