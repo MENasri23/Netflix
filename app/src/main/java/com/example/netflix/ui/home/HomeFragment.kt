@@ -19,12 +19,6 @@ class HomeFragment : Fragment() {
 
     private val viewModel by viewModels<HomeViewModel>()
     private lateinit var binding: HomeFragmentBinding
-//    private lateinit var browserLauncher: ActivityResultLauncher<>
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +33,7 @@ class HomeFragment : Fragment() {
         val movieEventHandler = movieItemEvents {
             onFavorite = { id -> viewModel.toggleFavorite(id) }
             browesWebsite = { movieUrl -> shareViaBrowser(movieUrl) }
-            shareMovie = {movie -> shareWithApps(movie)}
+            shareMovie = { movie -> shareWithApps(movie) }
         }
 
         val adapter = MovieAdapter(movieEventHandler)
@@ -51,11 +45,9 @@ class HomeFragment : Fragment() {
             }
         }
 
+        viewModel.fetchMovies()
+
         return binding.root
-    }
-
-    private fun shareWithApps(movie: Movie) {
-
     }
 
     private fun shareViaBrowser(movieUrl: String) {
@@ -69,9 +61,14 @@ class HomeFragment : Fragment() {
         startActivity(Intent.createChooser(intent, getString(R.string.share_movie)))
     }
 
-    override fun onStart() {
-        super.onStart()
-        viewModel.fetchMovies()
+    private fun shareWithApps(movie: Movie) {
+        val share = Intent.createChooser(Intent().apply {
+            action = Intent.ACTION_SEND
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TITLE, "Introducing content previews")
+            putExtra(Intent.EXTRA_STREAM, Uri.parse(movie.url))
+        }, null)
+        startActivity(share)
     }
 
     companion object {
