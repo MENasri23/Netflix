@@ -114,7 +114,6 @@
                             android:layout_height="wrap_content"
                             android:text="@string/runtime_format"
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                            app:firstBaselineToTopHeight="@dimen/subtitle_firstBaseLineToTop_height"
                             app:layout_constraintStart_toStartOf="@+id/verticalStartGuideline"
                             app:layout_constraintTop_toBottomOf="@+id/tvGenre" />
 
@@ -132,7 +131,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            app:layout_constraintGuide_begin="36dp" />
+                            app:layout_constraintGuide_begin="24dp" />
 
                         <androidx.constraintlayout.widget.Guideline
                             android:id="@+id/horizontalTopGuideline"
@@ -146,15 +145,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            app:layout_constraintGuide_end="36dp" />
+                            app:layout_constraintGuide_end="24dp" />
 
                         <TextView
                             android:id="@+id/tvOverview"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textSize="36dp"
+                            android:textAppearance="?attr/textAppearanceBody2"
                             android:text="@string/lorem_large"
-                            app:firstBaselineToTopHeight="@dimen/body_firstBaseLineToTop_height"
+                            app:firstBaselineToTopHeight="@dimen/subtitle_firstBaseLineToTop_height"
                             app:layout_constraintEnd_toStartOf="@+id/verticalEndGuideline"
                             app:layout_constraintStart_toStartOf="@+id/verticalStartGuideline"
                             app:layout_constraintTop_toBottomOf="@+id/tvRuntime" />
