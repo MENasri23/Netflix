@@ -5,20 +5,23 @@ import com.example.netflix.model.Movie
 data class MovieItemEventHandler(
     val toggleFavorite: (String) -> Unit,
     val goWebsite: (String) -> Unit,
-    val share: (Movie) -> Unit
+    val share: (Movie) -> Unit,
+    val onCLick: (String) -> Unit
 )
 
 class MovieItemEventHandlerBuilder {
-    var onFavorite: (movieId: String) -> Unit = {}
-    var browesWebsite: (url: String) -> Unit = {}
-    var shareMovie: (movie: Movie) -> Unit = {}
+    var onFavorite: ((movieId: String) -> Unit)? = null
+    var browseWebsite: ((url: String) -> Unit)? = null
+    var shareMovie: ((movie: Movie) -> Unit)? = null
+    var onMovieClicked: ((onCLick: String) -> Unit)? = null
 
 
     fun build(): MovieItemEventHandler {
         return MovieItemEventHandler(
-            onFavorite,
-            browesWebsite,
-            shareMovie
+            onFavorite ?: {},
+            browseWebsite ?: {},
+            shareMovie ?: {},
+            onMovieClicked ?: {}
         )
     }
 }

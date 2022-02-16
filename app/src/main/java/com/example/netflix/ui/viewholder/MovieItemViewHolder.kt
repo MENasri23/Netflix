@@ -35,6 +35,7 @@ class MovieItemViewHolder private constructor(
             btnFavorite.setOnClickListener(listener)
             btnGoWebsite.setOnClickListener(listener)
             btnShare.setOnClickListener(listener)
+            cardViewMovie.setOnClickListener(listener)
         }
     }
 
@@ -46,10 +47,11 @@ class MovieItemViewHolder private constructor(
             val movie = currentMovie ?: return
 
             with(binding) {
-                when (v?.id) {
-                    btnFavorite.id -> eventHandler.toggleFavorite(movie.id)
-                    btnGoWebsite.id -> eventHandler.goWebsite(movie.url)
-                    btnShare.id -> eventHandler.share(movie)
+                when (v) {
+                    btnFavorite -> eventHandler.toggleFavorite(movie.id)
+                    btnGoWebsite -> eventHandler.goWebsite(movie.url)
+                    btnShare -> eventHandler.share(movie)
+                    cardViewMovie -> eventHandler.onCLick(movie.id)
                 }
             }
         }
@@ -57,6 +59,7 @@ class MovieItemViewHolder private constructor(
 
     companion object {
 
+        @Suppress("UNCHECKED_CAST")
         fun createFrom(
             parent: ViewGroup,
             eventHandler: MovieItemEventHandler

@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.netflix.R
 import com.example.netflix.databinding.HomeFragmentBinding
 import com.example.netflix.model.Movie
@@ -32,8 +33,13 @@ class HomeFragment : Fragment() {
 
         val movieEventHandler = movieItemEvents {
             onFavorite = { id -> viewModel.toggleFavorite(id) }
-            browesWebsite = { movieUrl -> shareViaBrowser(movieUrl) }
+            browseWebsite = { movieUrl -> shareViaBrowser(movieUrl) }
             shareMovie = { movie -> shareWithApps(movie) }
+            onMovieClicked = { id ->
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToMovieDetailFragment(id)
+                )
+            }
         }
 
         val adapter = MovieAdapter(movieEventHandler)
