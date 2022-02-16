@@ -17,24 +17,28 @@ abstract class AppBarStateChangeListener : OnOffsetChangedListener {
         mCurrentState = when {
             i == 0 -> {
                 if (mCurrentState != State.EXPANDED) {
-                    onStateChanged(appBarLayout, State.EXPANDED)
+                    onStateChanged(appBarLayout, State.EXPANDED, 0f)
                 }
                 State.EXPANDED
             }
             abs(i) >= appBarLayout.totalScrollRange -> {
                 if (mCurrentState != State.COLLAPSED) {
-                    onStateChanged(appBarLayout, State.COLLAPSED)
+                    onStateChanged(appBarLayout, State.COLLAPSED, 1f)
                 }
                 State.COLLAPSED
             }
             else -> {
                 if (mCurrentState != State.IDLE) {
-                    onStateChanged(appBarLayout, State.IDLE)
                 }
+                onStateChanged(
+                    appBarLayout,
+                    State.IDLE,
+                    -i / appBarLayout.totalScrollRange.toFloat()
+                )
                 State.IDLE
             }
         }
     }
 
-    abstract fun onStateChanged(appBarLayout: AppBarLayout?, state: State?)
+    abstract fun onStateChanged(appBarLayout: AppBarLayout?, state: State?, friction: Float)
 }

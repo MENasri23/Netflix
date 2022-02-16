@@ -1,22 +1,20 @@
 package com.example.netflix.ui.moviedetail
 
-import android.animation.ObjectAnimator
-import android.animation.PropertyValuesHolder
+import android.animation.*
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.support.v4.media.session.PlaybackStateCompat
-import android.util.Property
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.netflix.R
+import androidx.core.animation.addListener
+import com.example.netflix.databinding.MovieDetailFragmentBinding
 import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MovieDetailFragment : Fragment() {
 
     private lateinit var viewModel: MovieDetailViewModel
+    private lateinit var binding: MovieDetailFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,40 +22,41 @@ class MovieDetailFragment : Fragment() {
     ): View? {
         viewModel = ViewModelProvider(this).get(MovieDetailViewModel::class.java)
 
-        return inflater.inflate(R.layout.movie_detail_fragment, container, false)
+        binding = MovieDetailFragmentBinding.inflate(inflater, container, false)
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val appBar = view.findViewById<AppBarLayout>(R.id.appBarLayout)
-        val btnFavorite = view.findViewById<FloatingActionButton>(R.id.btnFavorite)
-
-        /*appBar.addOnOffsetChangedListener(
-            AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
-                val range = appBarLayout.totalScrollRange.toFloat()
-                val progress = 1f - (-verticalOffset / range)
-
-
-                if (progress < 0.75 && btnFavorite.scaleX > 0f) {
-                    val scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 0f)
-                    val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 0f)
-                    val animator =
-                        ObjectAnimator.ofPropertyValuesHolder(btnFavorite, scaleX, scaleY).apply {
-                            repeatCount = 1
-                            repeatMode = ObjectAnimator.REVERSE
-                        }
-                    animator.start()
-                }
-            })*/
-
-        appBar.addOnOffsetChangedListener(
+        binding.appBarLayout.addOnOffsetChangedListener(
             object : AppBarStateChangeListener() {
-                override fun onStateChanged(appBarLayout: AppBarLayout?, state: State?) {
+                override fun onStateChanged(
+                    appBarLayout: AppBarLayout?, state: State?, friction: Float
+                ) {
                     when (state) {
-                        State.EXPANDED -> btnFavorite.animateScale(1f)
-                        State.COLLAPSED -> btnFavorite.animateScale(0f)
-                        State.IDLE -> {}
+                        State.EXPANDED -> {
+                            binding.group.visibility = View.VISIBLE
+                            animateAlpha(
+                                binding.tvToolbarTitle,
+                                binding.tvToolbarRuntime,
+                                start = binding.tvToolbarTitle.alpha,
+                                end = 0f
+                            )
+                        }
+                        State.COLLAPSED -> {
+                            binding.group.visibility = View.GONE
+                            animateAlpha(
+                                binding.tvToolbarTitle,
+                                binding.tvToolbarRuntime,
+                                start = binding.tvToolbarTitle.alpha,
+                                end = 1f
+                            )
+                        }
+                        State.IDLE -> {
+                            binding.viewCover.alpha = friction.coerceIn(0.6f, 0.8f)
+                        }
                     }
                 }
             }
@@ -70,4 +69,51 @@ class MovieDetailFragment : Fragment() {
         val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, start, end)
         ObjectAnimator.ofPropertyValuesHolder(this, scaleX, scaleY).start()
     }
+
+    fun animateAlpha(vararg views: View, start: Float, end: Float) {
+        val animateSet = AnimatorSet()
+        animateSet.playTogether(
+            views.map { ObjectAnimator.ofFloat(it, "alpha", start, end) }
+        )
+        animateSet.start()
+
+    }
+
+
+    fun fadeInContentHeadline() {
+        with(binding) {
+            AnimatorSet().apply {
+                playTogether(
+                    ObjectAnimator.ofFloat(tvTitle, "alpha", 1f),
+                    ObjectAnimator.ofFloat(tvRuntime, "alpha", 1f),
+                    ObjectAnimator.ofFloat(tvGenre, "alpha", 1f),
+                    ObjectAnimator.ofFloat(tvDate, "alpha", 1f),
+                )
+                removeAllListeners()
+                start()
+            }
+        }
+    }
+
+    fun fadeOutContentHeadline() {
+        with(binding) {
+            AnimatorSet().apply {
+                playTogether(
+                    ObjectAnimator.ofFloat(tvTitle, "alpha", 0f),
+                    ObjectAnimator.ofFloat(tvRuntime, "alpha", 0f),
+                    ObjectAnimator.ofFloat(tvGenre, "alpha", 0f),
+                    ObjectAnimator.ofFloat(tvDate, "alpha", 0f),
+                )
+                addListener(onEnd = {
+                    tvTitle.visibility = View.GONE
+                    tvRuntime.visibility = View.GONE
+                    tvGenre.visibility = View.GONE
+                    tvDate.visibility = View.GONE
+                })
+                start()
+            }
+        }
+    }
+
+
 }
