@@ -2,6 +2,7 @@ package com.example.netflix.ui.home
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.*
+import com.example.netflix.ui.viewholder.BaseViewHolder
 import com.example.netflix.ui.viewholder.MovieItemViewHolder
 import com.example.netflix.ui.viewholder.eventhandler.MovieItemEventHandler
 
