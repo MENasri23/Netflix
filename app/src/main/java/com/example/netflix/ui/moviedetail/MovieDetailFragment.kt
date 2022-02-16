@@ -19,10 +19,10 @@ class MovieDetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         viewModel = ViewModelProvider(this).get(MovieDetailViewModel::class.java)
-
         binding = MovieDetailFragmentBinding.inflate(inflater, container, false)
+
 
         return binding.root
     }
@@ -30,38 +30,7 @@ class MovieDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.appBarLayout.addOnOffsetChangedListener(
-            object : AppBarStateChangeListener() {
-                override fun onStateChanged(
-                    appBarLayout: AppBarLayout?, state: State?, friction: Float
-                ) {
-                    when (state) {
-                        State.EXPANDED -> {
-                            binding.group.visibility = View.VISIBLE
-                            animateAlpha(
-                                binding.tvToolbarTitle,
-                                binding.tvToolbarRuntime,
-                                start = binding.tvToolbarTitle.alpha,
-                                end = 0f
-                            )
-                        }
-                        State.COLLAPSED -> {
-                            binding.group.visibility = View.GONE
-                            animateAlpha(
-                                binding.tvToolbarTitle,
-                                binding.tvToolbarRuntime,
-                                start = binding.tvToolbarTitle.alpha,
-                                end = 1f
-                            )
-                        }
-                        State.IDLE -> {
-                            binding.viewCover.alpha = friction.coerceIn(0.6f, 0.8f)
-                        }
-                    }
-                }
-            }
-        )
-
+        binding.appBarLayout.setupWithScrollStateChangeListener()
     }
 
     fun <T : View> T.animateScale(end: Float, start: Float = this.scaleX) {
@@ -116,4 +85,38 @@ class MovieDetailFragment : Fragment() {
     }
 
 
+    private fun AppBarLayout.setupWithScrollStateChangeListener() {
+        addOnOffsetChangedListener(
+            object : AppBarStateChangeListener() {
+                override fun onStateChanged(
+                    appBarLayout: AppBarLayout?, state: State?, friction: Float
+                ) {
+                    when (state) {
+                        State.EXPANDED -> {
+                            binding.group.visibility = View.VISIBLE
+                            animateAlpha(
+                                binding.tvToolbarTitle,
+                                binding.tvToolbarRuntime,
+                                start = binding.tvToolbarTitle.alpha,
+                                end = 0f
+                            )
+                        }
+                        State.COLLAPSED -> {
+                            binding.group.visibility = View.GONE
+                            animateAlpha(
+                                binding.tvToolbarTitle,
+                                binding.tvToolbarRuntime,
+                                start = binding.tvToolbarTitle.alpha,
+                                end = 1f
+                            )
+                        }
+                        State.IDLE -> {
+                            binding.viewCover.alpha = friction.coerceIn(0.6f, 0.8f)
+                        }
+                        null -> {}
+                    }
+                }
+            }
+        )
+    }
 }
