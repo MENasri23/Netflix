@@ -15,39 +15,21 @@ import com.google.android.material.appbar.AppBarLayout
 
 class MovieDetailFragment : Fragment(R.layout.movie_detail_fragment) {
 
+    private val binding by dataBindings(MovieDetailFragmentBinding::bind)
+    private val navArgs by navArgs<MovieDetailFragmentArgs>()
     private val viewModel by viewModels<MovieDetailViewModel> {
         MovieHomeViewModelFactory(Injector.provideMovieManager())
     }
-    private val binding by dataBindings(MovieDetailFragmentBinding::bind)
-    private val navArgs by navArgs<MovieDetailFragmentArgs>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val movieId = navArgs.movieId
+        viewModel.updateUiStates(movieId)
 
-
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.appBarLayout.setupWithScrollStateChangeListener()
-    }
-
-
-    fun <T : View> T.animateScale(end: Float, start: Float = this.scaleX) {
-//       First solution
-        val scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, start, end)
-        val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, start, end)
-        ObjectAnimator.ofPropertyValuesHolder(this, scaleX, scaleY).start()
-
-//        second solution
-//        binding.tvGenre.animate().scaleX(0.4f).scaleY(0.4f).start()
-    }
-
-    fun animateAlpha(vararg views: View, start: Float, end: Float) {
-        val animateSet = AnimatorSet()
-        animateSet.playTogether(
-            views.map { ObjectAnimator.ofFloat(it, "alpha", start, end) }
-        )
-        animateSet.start()
-
     }
 
 
@@ -85,5 +67,15 @@ class MovieDetailFragment : Fragment(R.layout.movie_detail_fragment) {
                 }
             }
         )
+    }
+
+
+    fun animateAlpha(vararg views: View, start: Float, end: Float) {
+        val animateSet = AnimatorSet()
+        animateSet.playTogether(
+            views.map { ObjectAnimator.ofFloat(it, "alpha", start, end) }
+        )
+        animateSet.start()
+
     }
 }

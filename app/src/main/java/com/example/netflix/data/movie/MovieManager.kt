@@ -34,4 +34,11 @@ class MovieManager {
         return newList
     }
 
+    fun findMovieById(movieId: String, callback: (movie: Movie) -> Unit) {
+        executor.submit {
+           val movie = movies.firstOrNull { it.id == movieId }
+            movie?.let(callback)
+        }
+    }
+
 }
