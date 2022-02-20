@@ -13,6 +13,15 @@ class MovieItemViewHolder private constructor(
 
     private val listener = ClickListener()
 
+    init {
+        with(binding) {
+            btnFavorite.setOnClickListener(listener)
+            btnGoWebsite.setOnClickListener(listener)
+            btnShare.setOnClickListener(listener)
+            cardViewMovie.setOnClickListener(listener)
+        }
+    }
+
     override fun bind(item: ListItem.MovieItem) {
         val movie = item.movie
         listener.currentMovie = movie
@@ -22,21 +31,11 @@ class MovieItemViewHolder private constructor(
             overview.text = overflowTextOf(movie.overview)
             executePendingBindings()
         }
-        setListeners()
     }
 
     private fun overflowTextOf(overview: String) = buildString {
         if (overview.length < 150) append(overview)
         else append(overview.substring(0..150)).append("...")
-    }
-
-    private fun setListeners() {
-        with(binding) {
-            btnFavorite.setOnClickListener(listener)
-            btnGoWebsite.setOnClickListener(listener)
-            btnShare.setOnClickListener(listener)
-            cardViewMovie.setOnClickListener(listener)
-        }
     }
 
 
