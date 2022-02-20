@@ -65,9 +65,8 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
         val share = Intent.createChooser(Intent().apply {
             action = Intent.ACTION_SEND
             type = "text/plain"
-            putExtra(Intent.EXTRA_TITLE, "Introducing content previews")
-            putExtra(Intent.EXTRA_STREAM, Uri.parse(movie.url))
-        }, null)
+            putExtra(Intent.EXTRA_TEXT, movie.overview)
+        }, getString(R.string.share_movie))
         startActivity(share)
     }
 

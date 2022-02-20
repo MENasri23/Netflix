@@ -23,13 +23,13 @@ class MovieDetailFragment : Fragment(R.layout.movie_detail_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.appBarLayout.setupWithScrollStateChangeListener()
 
         val movieId = navArgs.movieId
         viewModel.updateUiStates(movieId)
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.appBarLayout.setupWithScrollStateChangeListener()
     }
 
 

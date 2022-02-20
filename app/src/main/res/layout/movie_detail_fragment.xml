@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.example.netflix.ui.moviedetail.MovieDetailViewModel" />
@@ -24,15 +25,15 @@
             android:overScrollMode="never">
 
             <ImageView
+                imageResId="@{viewModel.movie.imageId}"
                 android:layout_width="match_parent"
                 android:layout_height="600dp"
                 android:layout_gravity="top"
                 android:contentDescription="@null"
                 android:scaleType="centerCrop"
-                imageResId="@{viewModel.movie.imageId}"
-                tools:src="@drawable/malcolm_x"
                 app:layout_collapseMode="parallax"
-                app:layout_scrollFlags="enterAlways" />
+                app:layout_scrollFlags="enterAlways"
+                tools:src="@drawable/malcolm_x" />
 
             <View
                 android:id="@+id/viewCover"
@@ -47,10 +48,10 @@
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="400dp"
-            app:liftOnScroll="true"
             android:background="@android:color/transparent"
             android:fitsSystemWindows="true"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark">
+            android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
+            app:liftOnScroll="true">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
@@ -62,8 +63,8 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
-                    app:layout_collapseMode="pin"
                     android:gravity="center_vertical"
+                    app:layout_collapseMode="pin"
                     app:navigationIcon="@drawable/ic_arrow_back_24">
 
                     <LinearLayout
@@ -76,9 +77,9 @@
                             android:id="@+id/tvToolbarTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="?attr/colorOnPrimary"
                             android:text="@{viewModel.movie.title}"
-                            android:textAppearance="?attr/textAppearanceHeadline6" />
+                            android:textAppearance="?attr/textAppearanceHeadline6"
+                            android:textColor="?attr/colorOnPrimary" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvToolbarRuntime"
@@ -86,7 +87,8 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
                             android:text="@{@string/runtime_format(viewModel.movie.metadata.runtime)}"
-                            android:textAppearance="?attr/textAppearanceSubtitle2" />
+                            android:textAppearance="?attr/textAppearanceSubtitle2"
+                            android:textColor="?attr/colorOnPrimary" />
 
                     </LinearLayout>
 
@@ -153,9 +155,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@{viewModel.movie.metadata.releaseDate}"
-                        tools:text="@string/date_format"
                         app:layout_constraintStart_toEndOf="@id/verticalStartGuideline"
-                        app:layout_constraintTop_toBottomOf="@id/tvRuntime" />
+                        app:layout_constraintTop_toBottomOf="@id/tvRuntime"
+                        tools:text="@string/date_format" />
 
 
                     <TextView
@@ -163,12 +165,12 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@{viewModel.movie.overview}"
-                        tools:text="@string/lorem_very_large"
                         android:textAppearance="?attr/textAppearanceBody2"
                         app:firstBaselineToTopHeight="@dimen/subtitle_firstBaseLineToTop_height"
                         app:layout_constraintEnd_toStartOf="@+id/verticalEndGuideline"
                         app:layout_constraintStart_toStartOf="@+id/verticalStartGuideline"
-                        app:layout_constraintTop_toBottomOf="@+id/tvDate" />
+                        app:layout_constraintTop_toBottomOf="@+id/tvDate"
+                        tools:text="@string/lorem_very_large" />
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/verticalStartGuideline"
@@ -205,6 +207,7 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnFavorite"
+            favorite="@{viewModel.movie.favorite}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="?attr/colorOnPrimary"
@@ -212,7 +215,6 @@
             android:clickable="true"
             android:contentDescription="@null"
             android:focusable="true"
-            android:src="@drawable/ic_favorite_back"
             app:fabSize="normal"
             app:layout_anchor="@id/appBarLayout"
             app:layout_anchorGravity="bottom|center_horizontal" />
@@ -228,8 +230,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingBottom="8dp"
-                android:paddingHorizontal="24dp">
+                android:paddingHorizontal="24dp"
+                android:paddingBottom="8dp">
 
                 <com.google.android.material.button.MaterialButton
                     android:layout_width="wrap_content"
