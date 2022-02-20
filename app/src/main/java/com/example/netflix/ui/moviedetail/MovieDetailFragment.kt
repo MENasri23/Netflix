@@ -1,42 +1,44 @@
 package com.example.netflix.ui.moviedetail
 
 import android.animation.*
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.core.animation.addListener
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
+import com.example.netflix.R
+import com.example.netflix.data.Injector
 import com.example.netflix.databinding.MovieDetailFragmentBinding
+import com.example.netflix.ui.home.MovieHomeViewModelFactory
+import com.example.netflix.ui.util.dataBindings
 import com.google.android.material.appbar.AppBarLayout
 
-class MovieDetailFragment : Fragment() {
+class MovieDetailFragment : Fragment(R.layout.movie_detail_fragment) {
 
-    private lateinit var viewModel: MovieDetailViewModel
-    private lateinit var binding: MovieDetailFragmentBinding
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        viewModel = ViewModelProvider(this).get(MovieDetailViewModel::class.java)
-        binding = MovieDetailFragmentBinding.inflate(inflater, container, false)
-
-
-        return binding.root
+    private val viewModel by viewModels<MovieDetailViewModel> {
+        MovieHomeViewModelFactory(Injector.provideMovieManager())
     }
+    private val binding by dataBindings(MovieDetailFragmentBinding::bind)
+    private val navArgs by navArgs<MovieDetailFragmentArgs>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val movieId = navArgs.movieId
+
+
         binding.appBarLayout.setupWithScrollStateChangeListener()
     }
 
+
     fun <T : View> T.animateScale(end: Float, start: Float = this.scaleX) {
+//       First solution
         val scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, start, end)
         val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, start, end)
         ObjectAnimator.ofPropertyValuesHolder(this, scaleX, scaleY).start()
+
+//        second solution
+//        binding.tvGenre.animate().scaleX(0.4f).scaleY(0.4f).start()
     }
 
     fun animateAlpha(vararg views: View, start: Float, end: Float) {
@@ -46,42 +48,6 @@ class MovieDetailFragment : Fragment() {
         )
         animateSet.start()
 
-    }
-
-
-    fun fadeInContentHeadline() {
-        with(binding) {
-            AnimatorSet().apply {
-                playTogether(
-                    ObjectAnimator.ofFloat(tvTitle, "alpha", 1f),
-                    ObjectAnimator.ofFloat(tvRuntime, "alpha", 1f),
-                    ObjectAnimator.ofFloat(tvGenre, "alpha", 1f),
-                    ObjectAnimator.ofFloat(tvDate, "alpha", 1f),
-                )
-                removeAllListeners()
-                start()
-            }
-        }
-    }
-
-    fun fadeOutContentHeadline() {
-        with(binding) {
-            AnimatorSet().apply {
-                playTogether(
-                    ObjectAnimator.ofFloat(tvTitle, "alpha", 0f),
-                    ObjectAnimator.ofFloat(tvRuntime, "alpha", 0f),
-                    ObjectAnimator.ofFloat(tvGenre, "alpha", 0f),
-                    ObjectAnimator.ofFloat(tvDate, "alpha", 0f),
-                )
-                addListener(onEnd = {
-                    tvTitle.visibility = View.GONE
-                    tvRuntime.visibility = View.GONE
-                    tvGenre.visibility = View.GONE
-                    tvDate.visibility = View.GONE
-                })
-                start()
-            }
-        }
     }
 
 
@@ -113,7 +79,8 @@ class MovieDetailFragment : Fragment() {
                         State.IDLE -> {
                             binding.viewCover.alpha = friction.coerceIn(0.6f, 0.8f)
                         }
-                        null -> {}
+                        null -> {
+                        }
                     }
                 }
             }
