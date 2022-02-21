@@ -9,8 +9,8 @@ import androidx.navigation.fragment.navArgs
 import com.example.netflix.R
 import com.example.netflix.data.Injector
 import com.example.netflix.databinding.MovieDetailFragmentBinding
-import com.example.netflix.ui.home.MovieHomeViewModelFactory
 import com.example.netflix.ui.util.dataBindings
+import com.example.netflix.ui.util.shareMovieViaBrowser
 import com.google.android.material.appbar.AppBarLayout
 
 class MovieDetailFragment : Fragment(R.layout.movie_detail_fragment) {
@@ -18,20 +18,29 @@ class MovieDetailFragment : Fragment(R.layout.movie_detail_fragment) {
     private val binding by dataBindings(MovieDetailFragmentBinding::bind)
     private val navArgs by navArgs<MovieDetailFragmentArgs>()
     private val viewModel by viewModels<MovieDetailViewModel> {
-        MovieHomeViewModelFactory(Injector.provideMovieManager())
+        MovieDetailViewModelFactory(Injector.provideMovieManager())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.appBarLayout.setupWithScrollStateChangeListener()
+
 
         val movieId = navArgs.movieId
         viewModel.updateUiStates(movieId)
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-    }
 
+        with(binding) {
+            appBarLayout.setupWithScrollStateChangeListener()
+
+            btnCheckout.setOnClickListener {
+                viewModel.movieUrl?.let { url -> requireActivity().shareMovieViaBrowser(url) }
+            }
+
+            toolbar.setNavigationOnClickListener { requireActivity().onBackPressed() }
+        }
+    }
 
     private fun AppBarLayout.setupWithScrollStateChangeListener() {
         addOnOffsetChangedListener(
@@ -68,7 +77,6 @@ class MovieDetailFragment : Fragment(R.layout.movie_detail_fragment) {
             }
         )
     }
-
 
     fun animateAlpha(vararg views: View, start: Float, end: Float) {
         val animateSet = AnimatorSet()

@@ -2,9 +2,7 @@ package com.example.netflix.ui.home
 
 import androidx.lifecycle.*
 import com.example.netflix.data.movie.MovieManager
-import com.example.netflix.data.movie.getMovies
 import com.example.netflix.model.Movie
-import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val movieManager: MovieManager

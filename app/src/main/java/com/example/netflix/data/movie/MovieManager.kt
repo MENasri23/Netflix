@@ -10,15 +10,16 @@ class MovieManager {
     private var _movies = getMovies()
     val movies: List<Movie> get() = _movies
 
+    @Suppress("UNCHECKED_CAST")
     fun toggleFavorite(
-        movieId: String, callback: (movies: List<Movie>) -> Unit
+        movieId: String, callback: (movies: List<Movie>) -> Unit = { }
     ): Future<List<Movie>> {
         return executor.submit {
             _movies.copy(movieId) { it.copy(isFavorite = !it.isFavorite) }
                 .also {
+                    callback(it)
                     synchronized(this) { _movies = it }
                 }
-            callback(movies)
         } as Future<List<Movie>>
     }
 

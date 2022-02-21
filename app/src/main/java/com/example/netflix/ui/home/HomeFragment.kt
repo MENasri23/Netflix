@@ -10,8 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.netflix.R
 import com.example.netflix.data.Injector
 import com.example.netflix.databinding.HomeFragmentBinding
-import com.example.netflix.model.Movie
-import com.example.netflix.ui.util.dataBindings
+import com.example.netflix.ui.util.*
 import com.example.netflix.ui.viewholder.eventhandler.movieItemEvents
 
 class HomeFragment : Fragment(R.layout.home_fragment) {
@@ -29,11 +28,11 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
 
         val movieEventHandler = movieItemEvents {
             onFavorite = { id -> viewModel.toggleFavorite(id) }
-            browseWebsite = { movieUrl -> shareViaBrowser(movieUrl) }
-            shareMovie = { movie -> shareWithApps(movie) }
+            browseWebsite = { movieUrl -> requireActivity().shareMovieViaBrowser (movieUrl) }
+            shareMovie = { movie -> requireActivity().shareMovieWithApps(movie) }
             onMovieClicked = { id ->
                 findNavController().navigate(
-                    HomeFragmentDirections.actionHomeFragmentToMovieDetailFragment(id)
+                    HomeFragmentDirections.toMovieDetailFragment(id)
                 )
             }
         }
@@ -50,28 +49,9 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
         viewModel.fetchMovies()
     }
 
-    private fun shareViaBrowser(movieUrl: String) {
-        val uri = Uri.parse(movieUrl)
-        val intent = Intent().apply {
-            action = Intent.ACTION_VIEW
-            data = uri
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        }
-
-        startActivity(Intent.createChooser(intent, getString(R.string.share_movie)))
-    }
-
-    private fun shareWithApps(movie: Movie) {
-        val share = Intent.createChooser(Intent().apply {
-            action = Intent.ACTION_SEND
-            type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT, movie.overview)
-        }, getString(R.string.share_movie))
-        startActivity(share)
-    }
 
     companion object {
-        const val TAG = "HomeFragmentTagHomeFragmentTag"
+        const val TAG = "HomeFragmentTag"
     }
 
 }
