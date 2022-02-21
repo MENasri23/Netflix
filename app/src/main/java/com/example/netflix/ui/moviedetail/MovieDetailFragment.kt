@@ -29,7 +29,6 @@ class MovieDetailFragment : Fragment(R.layout.movie_detail_fragment) {
         viewModel.updateUiStates(movieId)
 
         binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
 
         with(binding) {
             appBarLayout.setupWithScrollStateChangeListener()
