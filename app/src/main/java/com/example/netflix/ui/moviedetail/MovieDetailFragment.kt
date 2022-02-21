@@ -2,8 +2,8 @@ package com.example.netflix.ui.moviedetail
 
 import android.animation.*
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.netflix.R
@@ -24,21 +24,22 @@ class MovieDetailFragment : Fragment(R.layout.movie_detail_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         val movieId = navArgs.movieId
         viewModel.updateUiStates(movieId)
-
         binding.viewModel = viewModel
 
         with(binding) {
             appBarLayout.setupWithScrollStateChangeListener()
 
             btnCheckout.setOnClickListener {
-                viewModel.movieUrl?.let { url -> requireActivity().shareMovieViaBrowser(url) }
+                this@MovieDetailFragment.viewModel
+                    .movieUrl?.let { url -> requireActivity().shareMovieViaBrowser(url) }
             }
 
             toolbar.setNavigationOnClickListener { requireActivity().onBackPressed() }
         }
+
+
     }
 
     private fun AppBarLayout.setupWithScrollStateChangeListener() {

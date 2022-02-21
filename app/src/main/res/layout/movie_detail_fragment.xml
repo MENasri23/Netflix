@@ -78,6 +78,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@{viewModel.movie.title}"
+                            android:alpha="0"
                             android:textAppearance="?attr/textAppearanceHeadline6"
                             android:textColor="?attr/colorOnPrimary" />
 
@@ -86,6 +87,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
+                            android:alpha="0"
                             android:text="@{@string/runtime_format(viewModel.movie.metadata.runtime)}"
                             android:textAppearance="?attr/textAppearanceSubtitle2"
                             android:textColor="?attr/colorOnPrimary" />
@@ -232,6 +234,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingHorizontal="24dp"
+                android:clipToPadding="false"
                 android:paddingBottom="8dp">
 
                 <com.google.android.material.button.MaterialButton
