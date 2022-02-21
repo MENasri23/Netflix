@@ -1,8 +1,8 @@
-package com.example.netflix.data
+package com.example.netflix.ui.util
 
 import com.example.netflix.data.movie.MovieManager
 
-object Injector {
+object AppContainer {
     private var movieManager: MovieManager? = null
 
     fun provideMovieManager() = movieManager ?: synchronized(this) {

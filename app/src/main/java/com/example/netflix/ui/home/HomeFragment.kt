@@ -1,14 +1,12 @@
 package com.example.netflix.ui.home
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.netflix.R
-import com.example.netflix.data.Injector
+import com.example.netflix.ui.util.AppContainer
 import com.example.netflix.databinding.HomeFragmentBinding
 import com.example.netflix.ui.util.*
 import com.example.netflix.ui.viewholder.eventhandler.movieItemEvents
@@ -16,7 +14,7 @@ import com.example.netflix.ui.viewholder.eventhandler.movieItemEvents
 class HomeFragment : Fragment(R.layout.home_fragment) {
 
     private val viewModel by viewModels<HomeViewModel> {
-        MovieHomeViewModelFactory(Injector.provideMovieManager())
+        MovieHomeViewModelFactory(AppContainer.provideMovieManager())
     }
     private val binding by dataBindings(HomeFragmentBinding::bind)
 

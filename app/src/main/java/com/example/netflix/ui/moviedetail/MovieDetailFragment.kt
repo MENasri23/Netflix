@@ -7,7 +7,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.netflix.R
-import com.example.netflix.data.Injector
+import com.example.netflix.ui.util.AppContainer
 import com.example.netflix.databinding.MovieDetailFragmentBinding
 import com.example.netflix.ui.util.dataBindings
 import com.example.netflix.ui.util.shareMovieViaBrowser
@@ -18,7 +18,7 @@ class MovieDetailFragment : Fragment(R.layout.movie_detail_fragment) {
     private val binding by dataBindings(MovieDetailFragmentBinding::bind)
     private val navArgs by navArgs<MovieDetailFragmentArgs>()
     private val viewModel by viewModels<MovieDetailViewModel> {
-        MovieDetailViewModelFactory(Injector.provideMovieManager())
+        MovieDetailViewModelFactory(AppContainer.provideMovieManager())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
