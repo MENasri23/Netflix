@@ -22,7 +22,6 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
 
         val movieEventHandler = movieItemEvents {
             onFavorite = { id -> viewModel.toggleFavorite(id) }

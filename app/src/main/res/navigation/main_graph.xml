@@ -5,6 +5,12 @@
     android:id="@+id/main_graph.xml"
     app:startDestination="@id/homeFragment">
 
+    <action
+        android:id="@+id/actionToLoginFragment"
+        app:destination="@id/loginFragment"
+        app:popUpTo="@id/loginFragment"
+        app:popUpToInclusive="true" />
+
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.netflix.ui.home.HomeFragment"
@@ -30,4 +36,13 @@
             android:name="movieId"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.netflix.ui.profile.ProfileFragment"
+        android:label="ProfileFragment" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.netflix.ui.login.LoginFragment"
+        android:label="login_fragment"
+        tools:layout="@layout/login_fragment" />
 </navigation>

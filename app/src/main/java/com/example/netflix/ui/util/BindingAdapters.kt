@@ -2,6 +2,7 @@ package com.example.netflix.ui.util
 
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
+import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.example.netflix.R
 
@@ -15,4 +16,13 @@ fun ImageView.favoriteItem(favorite: Boolean) {
 @BindingAdapter("imageResId")
 fun ImageView.setImage(@DrawableRes resId: Int) {
     setImageResource(resId)
+}
+
+@BindingAdapter("imageLocalUrl")
+fun ImageView.setImageFromUri(url: String?) {
+    if (url == null) {
+        setImageResource(R.drawable.ic_person_24)
+    } else {
+        setImageURI(url.toUri())
+    }
 }
