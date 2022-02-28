@@ -7,7 +7,7 @@ object AppContainer {
     private var movieRepository: MovieRepository? = null
     private var UserManager: UserManager? = null
 
-    fun provideMovieManager() = movieRepository ?: synchronized(this) {
+    fun provideMovieRepository() = movieRepository ?: synchronized(this) {
         return movieRepository ?: MovieRepository().also { movieRepository = it }
     }
 

@@ -14,7 +14,7 @@ import com.example.netflix.ui.viewholder.eventhandler.movieItemEvents
 class HomeFragment : Fragment(R.layout.home_fragment) {
 
     private val viewModel by viewModels<HomeViewModel> {
-        MovieHomeViewModelFactory(AppContainer.provideMovieManager())
+        MovieHomeViewModelFactory(AppContainer.provideMovieRepository())
     }
     private val binding by dataBindings(HomeFragmentBinding::bind)
 
