@@ -2,7 +2,7 @@ package com.example.netflix.ui.viewholder
 
 import android.view.*
 import com.example.netflix.databinding.ListMovieItemViewBinding
-import com.example.netflix.model.Movie
+import com.example.netflix.data.model.Movie
 import com.example.netflix.ui.home.*
 import com.example.netflix.ui.viewholder.eventhandler.MovieItemEventHandler
 

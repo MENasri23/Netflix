@@ -1,6 +1,6 @@
 package com.example.netflix.ui.home
 
-import com.example.netflix.model.Movie
+import com.example.netflix.data.model.Movie
 
 sealed class ListItem {
     class MovieItem(val movie: Movie) : ListItem() {

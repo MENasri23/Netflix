@@ -1,10 +1,10 @@
-package com.example.netflix.data.movie
+package com.example.netflix.data.repository
 
-import com.example.netflix.model.Movie
+import com.example.netflix.data.model.Movie
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
 
-class MovieManager {
+class MovieRepository {
     private val executor = Executors.newSingleThreadExecutor()
 
     private var _movies = getMovies()

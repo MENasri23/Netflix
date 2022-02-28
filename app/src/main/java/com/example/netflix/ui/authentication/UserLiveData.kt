@@ -2,7 +2,7 @@ package com.example.netflix.ui.authentication
 
 import android.util.Log
 import androidx.lifecycle.LiveData
-import com.example.netflix.model.User
+import com.example.netflix.data.model.User
 
 class UserLiveData(
     private val userManager: UserManager

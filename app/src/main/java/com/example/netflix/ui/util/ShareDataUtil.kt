@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import com.example.netflix.R
-import com.example.netflix.model.Movie
+import com.example.netflix.data.model.Movie
 
 fun Context.shareMovieViaBrowser(movieUrl: String) {
     val uri = Uri.parse(movieUrl)

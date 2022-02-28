@@ -1,7 +1,7 @@
-package com.example.netflix.data.movie
+package com.example.netflix.data.repository
 
 import com.example.netflix.R
-import com.example.netflix.model.*
+import com.example.netflix.data.model.*
 
 val meta1 = Metadata(
     director = Director(

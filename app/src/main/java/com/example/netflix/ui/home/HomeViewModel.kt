@@ -1,22 +1,22 @@
 package com.example.netflix.ui.home
 
 import androidx.lifecycle.*
-import com.example.netflix.data.movie.MovieManager
-import com.example.netflix.model.Movie
+import com.example.netflix.data.repository.MovieRepository
+import com.example.netflix.data.model.Movie
 
 class HomeViewModel(
-    private val movieManager: MovieManager
+    private val movieRepository: MovieRepository
 ) : ViewModel() {
 
     private val _movies = MutableLiveData<List<Movie>?>(null)
     val movies: LiveData<List<Movie>?> get() = _movies
 
     fun fetchMovies() {
-        _movies.value = movieManager.movies
+        _movies.value = movieRepository.movies
     }
 
     fun toggleFavorite(movieId: String) {
-        movieManager.toggleFavorite(movieId) {
+        movieRepository.toggleFavorite(movieId) {
             _movies.postValue(it)
         }
     }

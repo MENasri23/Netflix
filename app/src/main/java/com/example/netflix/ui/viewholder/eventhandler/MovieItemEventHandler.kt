@@ -1,6 +1,6 @@
 package com.example.netflix.ui.viewholder.eventhandler
 
-import com.example.netflix.model.Movie
+import com.example.netflix.data.model.Movie
 
 data class MovieItemEventHandler(
     val toggleFavorite: (String) -> Unit,

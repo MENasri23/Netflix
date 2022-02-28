@@ -1,7 +1,7 @@
 package com.example.netflix.ui.authentication
 
 import com.example.netflix.data.Result
-import com.example.netflix.model.User
+import com.example.netflix.data.model.User
 import java.io.IOException
 import java.lang.IllegalArgumentException
 import java.util.*

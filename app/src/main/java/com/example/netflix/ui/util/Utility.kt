@@ -17,8 +17,9 @@ fun Activity.hideKeyboard() {
     }
 }
 
-fun NavController.navigateBack() {
+fun NavController.navigateBackToStartDestination() {
     val startDestination = graph.startDestinationId
+    popBackStack(startDestination, true)
     val navOptions = NavOptions.Builder()
         .setPopUpTo(startDestination, true)
         .build()

@@ -1,4 +1,4 @@
-package com.example.netflix.model
+package com.example.netflix.data.model
 
 import androidx.annotation.DrawableRes
 

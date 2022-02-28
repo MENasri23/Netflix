@@ -3,6 +3,7 @@ package com.example.netflix.ui.login
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -35,6 +36,10 @@ class LoginFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -117,7 +122,6 @@ class LoginFragment : Fragment() {
                 savedStateHandle.set(LOGIN_SUCCESSFUL, true)
                 updateUiWithUser(result.userView!!)
                 requireActivity().hideKeyboard()
-
                 findNavController().popBackStack()
             } else {
                 result.error?.let { errorResId -> showLoginFailed(errorResId) }
@@ -143,8 +147,9 @@ class LoginFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("ProfileFragment", "onDestroy: login fragment ")
+        Log.d("ProfileFragment", "onDetach: login fragment ")
     }
+
 
     companion object {
         const val LOGIN_SUCCESSFUL: String = "LOGIN_SUCCESSFUL"

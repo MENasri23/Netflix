@@ -1,11 +1,11 @@
 package com.example.netflix.ui.moviedetail
 
 import androidx.lifecycle.*
-import com.example.netflix.data.movie.MovieManager
-import com.example.netflix.model.Movie
+import com.example.netflix.data.repository.MovieRepository
+import com.example.netflix.data.model.Movie
 
 class MovieDetailViewModel(
-    private val movieManager: MovieManager
+    private val movieRepository: MovieRepository
 ) : ViewModel() {
 
     private val _movie = MutableLiveData<Movie?>()
@@ -14,7 +14,7 @@ class MovieDetailViewModel(
     val movieUrl: String? get() = movie.value?.url
 
     fun updateUiStates(movieId: String) {
-        movieManager.findMovieById(movieId) {
+        movieRepository.findMovieById(movieId) {
             _movie.postValue(it)
         }
     }
@@ -22,7 +22,7 @@ class MovieDetailViewModel(
     fun toggleFavorite() {
         val movie = movie.value ?: return
         _movie.value = movie.copy(isFavorite = !movie.isFavorite)
-        movieManager.toggleFavorite(movie.id)
+        movieRepository.toggleFavorite(movie.id)
     }
 
     fun backPressed() {
