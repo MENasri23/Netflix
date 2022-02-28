@@ -3,10 +3,8 @@ package com.example.netflix.ui.login
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.netflix.data.Result
 
 import com.example.netflix.R
-import com.example.netflix.ui.authentication.UserManager
 
 class LoginViewModel : ViewModel() {
 

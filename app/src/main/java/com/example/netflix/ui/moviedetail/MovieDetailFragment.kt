@@ -18,7 +18,7 @@ class MovieDetailFragment : Fragment(R.layout.movie_detail_fragment) {
     private val binding by dataBindings(MovieDetailFragmentBinding::bind)
     private val navArgs by navArgs<MovieDetailFragmentArgs>()
     private val viewModel by viewModels<MovieDetailViewModel> {
-        MovieDetailViewModelFactory(AppContainer.provideMovieManager())
+        MovieDetailViewModelFactory(AppContainer.provideMovieRepository())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -10,13 +10,13 @@ import com.example.netflix.ui.util.AppContainer
 
 class UserViewModel : ViewModel() {
 
-    private val userManager = AppContainer.provideUserManager()
+    private val userRepository = AppContainer.provideUserRepository()
 
     private val _loginResult = MutableLiveData(LoginResult())
     val loginResult: LiveData<LoginResult> get() = _loginResult
 
     fun login(email: String, password: String): LiveData<LoginResult> {
-        val result = userManager.login(email, password)
+        val result = userRepository.login(email, password)
         _loginResult.value = if (result is Result.Success) {
             LoginResult(userView = LoggedInUserView(result.data!!.email))
         } else {

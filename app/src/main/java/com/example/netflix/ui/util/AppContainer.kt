@@ -1,7 +1,7 @@
 package com.example.netflix.ui.util
 
 import com.example.netflix.data.repository.MovieRepository
-import com.example.netflix.ui.authentication.UserManager
+import com.example.netflix.data.repository.UserManager
 
 object AppContainer {
     private var movieRepository: MovieRepository? = null
@@ -11,7 +11,7 @@ object AppContainer {
         return movieRepository ?: MovieRepository().also { movieRepository = it }
     }
 
-    fun provideUserManager() = UserManager ?: synchronized(this) {
+    fun provideUserRepository() = UserManager ?: synchronized(this) {
         return UserManager ?: UserManager().also { UserManager = it }
     }
 

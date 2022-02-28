@@ -1,4 +1,4 @@
-package com.example.netflix.ui.authentication
+package com.example.netflix.data.repository
 
 import com.example.netflix.data.Result
 import com.example.netflix.data.model.User
